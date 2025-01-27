@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
 
         // save the user in database
 
-        user save = userRepo.save(user2);
-        return Optional.ofNullable(save)
+        User save = userRepo.save(user2);
+        return Optional.ofNullable(save);
     }
 
     @Override

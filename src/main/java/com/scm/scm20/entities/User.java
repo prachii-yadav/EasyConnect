@@ -3,6 +3,7 @@ package com.scm.scm20.entities;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -40,7 +41,7 @@ public class User {
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     // SELF, GOOGLE, FACEBOOK, TWITTER, LINKEDIN, GITHUB
     private Providers provider = Providers.SELF;
     private Providers providerUserId;
