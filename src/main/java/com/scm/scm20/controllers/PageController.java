@@ -66,7 +66,7 @@ public class PageController {
 
     // processing register
     @RequestMapping(value = "/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm,HttpSession session) {
+    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session) {
         System.out.println("Processing registration");
         // fetch form data
         System.out.println(userForm);
@@ -77,12 +77,12 @@ public class PageController {
         // UserForm-->User
 
         // User user = User.builder()
-        //         .name(userForm.getName())
-        //         .email(userForm.getEmail())
-        //         .password(userForm.getPassword())
-        //         .about(userForm.getAbout())
-        //         .profilePic("@{'images/profile.png'}")
-        //         .build();
+        // .name(userForm.getName())
+        // .email(userForm.getEmail())
+        // .password(userForm.getPassword())
+        // .about(userForm.getAbout())
+        // .profilePic("@{'images/profile.png'}")
+        // .build();
 
         User user = new User();
         user.setName(userForm.getName());
@@ -91,14 +91,14 @@ public class PageController {
         user.setAbout(userForm.getAbout());
         user.setPhoneNumber(userForm.getPhoneNumber());
         user.setProfilePic("@{'images/profile.png'}");
-        
+
         User savedUser = userService.saveUser(user);
 
         System.out.println("user saved");
 
         // message = 'Registration Successful'
         Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();
-        session.setAttribute("message","message");
+        session.setAttribute("message", message);
 
         // redirect to login page
         return "redirect:/register";
