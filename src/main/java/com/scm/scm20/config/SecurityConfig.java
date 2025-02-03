@@ -1,4 +1,5 @@
 package com.scm.scm20.config;
+
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,10 @@ public class SecurityConfig {
     @Autowired
     private SecurityCustomUserDetailService userDetailService;
 
-    //configuration of authentication provider spring security
+    @Autowired
+    private OAuthAuthenticationSuccessHandler handler;
+
+    // configuration of authentication provider spring security
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -59,18 +63,19 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        //configuration
-        //we have done urls configuration that which one will be public and which one will be private
-        httpSecurity.authorizeHttpRequests(authorize->{
+        // configuration
+        // we have done urls configuration that which one will be public and which one
+        // will be private
+        httpSecurity.authorizeHttpRequests(authorize -> {
             // authorize.requestMatchers("/home","/register","/services").permitAll();
             authorize.requestMatchers("/user/**").authenticated();
             authorize.anyRequest().permitAll();
         });
 
-        //form default login
-        httpSecurity.formLogin(formLogin ->{
+        // form default login
+        httpSecurity.formLogin(formLogin -> {
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate");
             formLogin.successForwardUrl("/user/dashboard");
@@ -107,6 +112,12 @@ public class SecurityConfig {
         httpSecurity.logout(logoutForm -> {
             logoutForm.logoutUrl("/do-logout");
             logoutForm.logoutSuccessUrl("/login?logout=true");
+        });
+
+        // oauth2 configurations
+        httpSecurity.oauth2Login(oauth -> {
+            oauth.loginPage("/login");
+            oauth.successHandler(handler);
         });
 
         return httpSecurity.build();
