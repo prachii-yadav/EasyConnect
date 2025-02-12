@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.scm.scm20.repositories.UserRepo;
 
 @Service
-public class SecurityCustomUserDetailService implements UserDetailsService{
+public class SecurityCustomUserDetailService implements UserDetailsService {
 
     @Autowired
     private UserRepo userRepo;
@@ -17,10 +17,10 @@ public class SecurityCustomUserDetailService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        //we have to load our user
+        // we have to load our user
         return userRepo.findByEmail(username)
-        .orElseThrow(()-> new UsernameNotFoundException("User not found with email:" +username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email:" + username));
 
     }
-    
+
 }
