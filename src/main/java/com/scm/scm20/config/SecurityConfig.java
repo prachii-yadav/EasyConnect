@@ -75,6 +75,8 @@ public class SecurityConfig {
         });
 
         // form default login
+        // httpSecurity.formLogin(Customizer.withDefaults()); 
+        
         httpSecurity.formLogin(formLogin -> {
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate");
