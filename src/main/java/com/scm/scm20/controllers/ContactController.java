@@ -1,5 +1,7 @@
 package com.scm.scm20.controllers;
 
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +71,11 @@ public class ContactController {
         // process the contact picture
 
         // image processing
-        // logger.info("file information : {}", contactForm.getContactImage().getOriginalFilename());
+        // logger.info("file information : {}",
+        // contactForm.getContactImage().getOriginalFilename());
 
-       String fileURL = imageService.uploadImage(contactForm.getContactImage());
+        String filename = UUID.randomUUID().toString();
+        String fileURL = imageService.uploadImage(contactForm.getContactImage(),filename );
 
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
@@ -84,8 +88,9 @@ public class ContactController {
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
         contact.setPicture(fileURL);
+        contact.setCloudinaryImagePublicId(filename);
 
-        // contactService.save(contact);
+        contactService.save(contact);
 
         System.out.println(contactForm);
 
