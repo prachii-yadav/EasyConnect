@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.scm.scm20.entities.Contact;
 import com.scm.scm20.entities.User;
 import com.scm.scm20.forms.ContactForm;
+import com.scm.scm20.helpers.AppConstants;
 import com.scm.scm20.helpers.Helper;
 import com.scm.scm20.helpers.Message;
 import com.scm.scm20.helpers.MessageType;
@@ -109,14 +110,19 @@ public class ContactController {
 
     // view contacts
     @RequestMapping
-    public String viewContacts(@RequestParam(value = "page" , defaultValue = "0") int page,@RequestParam(value = "size", defaultValue = "10") int size,@RequestParam(value = "sortBy",defaultValue = "name") String sortBy,@RequestParam(value = "direction", defaultValue = "asc") String direction,Model model, Authentication authentication) {
+    public String viewContacts(@RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction, Model model,
+            Authentication authentication) {
 
         // load all the user contacts
         String username = Helper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(username);
 
-        Page<Contact> pageContact = contactService.getByUser(user,page,size,sortBy,direction);
+        Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
         model.addAttribute("pageContact", pageContact);
+        model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
 
         return "user/contacts";
     }
