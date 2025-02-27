@@ -13,14 +13,20 @@ import com.scm.scm20.entities.Contact;
 import com.scm.scm20.entities.User;
 
 @Repository
-public interface ContactRepo extends JpaRepository<Contact,String> {
+public interface ContactRepo extends JpaRepository<Contact, String> {
 
-    //find the contact by user
-    //custom finder method
-    Page<Contact> findByUser(User user,Pageable pageable);
+    // find the contact by user
+    // custom finder method
+    Page<Contact> findByUser(User user, Pageable pageable);
 
-    //custom query method
+    // custom query method
     @Query("SELECT c from Contact c WHERE c.user.id = :userId")
-    List<Contact> findByUserId(@Param("userId")String userId);
+    List<Contact> findByUserId(@Param("userId") String userId);
+
+    Page<Contact> findByNameContaining(String nameKeyword, Pageable pageable);
+
+    Page<Contact> findByEmailContaining(String emailKeyword, Pageable pageable);
+
+    Page<Contact> findByPhoneContaining(String phonekeyword, Pageable pageable);
 
 }
