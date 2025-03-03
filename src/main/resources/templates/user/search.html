@@ -24,6 +24,7 @@
 
         <div class="contacts_container p-5">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div data-th-replace="~{message :: messagebox}"></div>
             <form
             data-th-object="${contactSearchForm}"
             data-th-action="@{'/user/contacts/search'}">
@@ -149,9 +150,9 @@
                       <a href="">
                         <i class="fa-solid w-6 h-6 fa-pen"></i>
                       </a>
-                      <a href="">
+                      <button th:onclick="loadContactdata([[${c.id}]])">
                         <i class="fa-solid w-6 h-6 fa-eye"></i>
-                      </a>
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -201,8 +202,10 @@
           </h1>
           </div>
         </div>
+        <div data-th-replace="~{user/contact_modals :: contact}"></div>
       </div>
     </div>
+    <script data-th-src="@{'/js/contacts.js'}"></script>
     <script>
       console.log("this is dashboard page");
     </script>
