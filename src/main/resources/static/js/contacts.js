@@ -75,6 +75,8 @@ async function deleteContact(id) {
     icon:"warning",
     showCancelButton: true,
     confirmButtonText: "Delete",
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
