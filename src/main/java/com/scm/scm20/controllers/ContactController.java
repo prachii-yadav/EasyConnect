@@ -189,7 +189,7 @@ public class ContactController {
         contactForm.setWebsiteLink(contact.getWebsiteLink());
         contactForm.setLinkedInLink(contact.getLinkedInLink());
         contactForm.setPicture(contact.getPicture());
-        ;
+    
         model.addAttribute("contactForm", contactForm);
         model.addAttribute("contactId", contactId);
         return "user/update_contact_view";
@@ -202,6 +202,9 @@ public class ContactController {
             Model model) {
 
         // update the contact
+        if (bindingResult.hasErrors()) {
+            return "user/update_contact_view";
+        }
         var con = contactService.getById(contactId);
         con.setId(contactId);
         con.setName(contactForm.getName());
